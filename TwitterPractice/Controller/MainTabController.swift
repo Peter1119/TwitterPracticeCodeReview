@@ -6,10 +6,22 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseStorage
+import FirebaseDatabase
 
 class MainTabController: UITabBarController {
 
     //MARK: - Properties
+    
+    var user: User? {
+        didSet {
+            guard let nav = viewControllers?[0] as? UINavigationController else { return }
+            guard let feed = nav.viewControllers.first as? FeedController else { return }
+            
+            feed.user = user
+        }
+    }
     
     let actionButton: UIButton = {
         let button = UIButton(type: .system)
@@ -23,14 +35,43 @@ class MainTabController: UITabBarController {
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureViewControllers()
-        configureUI()
+        view.backgroundColor = .twitterBlue
+//        logUserOut()
+        authenticateUserAndConfigureUI()
     }
     
     @objc func handleActionButtonTapped() {
         print("action")
     }
     
+    //MARK: - API
+    func fetchUser() {
+        UserService.shared.fetchUser { user in
+            self.user = user
+        }
+    }
+    
+    func authenticateUserAndConfigureUI() {
+        if Auth.auth().currentUser == nil {
+            DispatchQueue.main.async {
+                let nav = UINavigationController(rootViewController: LoginController())
+                nav.modalPresentationStyle = .fullScreen
+                self.present(nav, animated: true)
+            }
+        } else {
+            configureViewControllers()
+            configureUI()
+            fetchUser()
+        }
+    }
+
+    func logUserOut() {
+        do {
+            try Auth.auth().signOut()
+        } catch let error {
+            print("DEBUG: Failed to sign out with error \(error.localizedDescription)")
+        }
+    }
     //MARK: - Helpers
     
     func configureUI() {

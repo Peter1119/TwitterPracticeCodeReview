@@ -8,11 +8,14 @@
 import Foundation
 
 import UIKit
+import FirebaseAuth
+import FirebaseDatabase
 
 class RegisterationController: UIViewController {
     //MARK: - Properties
     
     private let imagePicker = UIImagePickerController()
+    private var profileImage: UIImage?
     
     private let plusPhotoButton: UIButton = {
         let button = UIButton(type: .system)
@@ -21,7 +24,7 @@ class RegisterationController: UIViewController {
         button.addTarget(self, action: #selector(handleAddProfilePhoto), for: .touchUpInside)
         return button
     }()
-
+    
     
     private lazy var emailContainerView: UIView = {
         let view = Utilities().inputContainerView(withImage: UIImage(named: "ic_mail_outline_white_2x-1"), textField: emailTextField)
@@ -69,7 +72,6 @@ class RegisterationController: UIViewController {
     
     private let usernameTextField: UITextField = {
         let tf = Utilities().textField(withPlaceholder: "Username")
-        tf.isSecureTextEntry = true
         return tf
     }()
     
@@ -92,13 +94,13 @@ class RegisterationController: UIViewController {
     }()
     
     //MARK: - LifeCycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
     }
     //MARK: - Selectors
-
+    
     @objc func handleAddProfilePhoto() {
         present(imagePicker, animated: true,completion: nil)
     }
@@ -108,9 +110,27 @@ class RegisterationController: UIViewController {
     }
     
     @objc func handleRegistration() {
-        print("handleRegistration")
+        
+        //프로필 이미지 등록 안됐을때
+        guard let profileImage = profileImage else {
+            print("프로필 이미지를 등록해 주세요!")
+            return
+        }
+        guard let email = emailTextField.text else { return }
+        guard let password = passwordTextField.text else { return }
+        guard let fullname = fullnameTextField.text else { return }
+        guard let username = usernameTextField.text else { return }
+        
+        let credentials = AuthCredentials(email: email, password: password, fullname: fullname, username: username, profileImage: profileImage)
+        AuthService.shared.registerUser(credentials: credentials) { Error, ref in
+            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+            guard let tab = window.rootViewController as? MainTabController else { return }
+            
+            tab.authenticateUserAndConfigureUI()
+            
+            self.dismiss(animated: true)
+        }
     }
-    
     //MARK: - Helpers
     
     func configureUI() {
@@ -139,6 +159,8 @@ class RegisterationController: UIViewController {
 extension RegisterationController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let profileImage = info[.editedImage] as? UIImage else { return }
+        
+        self.profileImage = profileImage
         
         plusPhotoButton.layer.cornerRadius = 128 / 2
         plusPhotoButton.layer.masksToBounds = true
