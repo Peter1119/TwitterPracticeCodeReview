@@ -28,7 +28,7 @@ class MainTabController: UITabBarController {
         button.tintColor = .white
         button.backgroundColor = .twitterBlue
         button.setImage(UIImage(named: "new_tweet"), for: .normal)
-        button.addTarget(self, action: #selector(handleActionButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -40,8 +40,12 @@ class MainTabController: UITabBarController {
         authenticateUserAndConfigureUI()
     }
     
-    @objc func handleActionButtonTapped() {
-        print("action")
+    @objc func actionButtonTapped() {
+        guard let user = user else { return }
+        let controller = UploadTweetViewController(user: user)
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true)
     }
     
     //MARK: - API
