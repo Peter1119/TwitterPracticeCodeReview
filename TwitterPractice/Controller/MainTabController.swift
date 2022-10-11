@@ -50,7 +50,8 @@ class MainTabController: UITabBarController {
     
     //MARK: - API
     func fetchUser() {
-        UserService.shared.fetchUser { user in
+        guard let uid = Auth.auth().currentUser?.uid else { return}
+        UserService.shared.fetchUser(uid: uid) { user in
             self.user = user
         }
     }
@@ -92,7 +93,7 @@ class MainTabController: UITabBarController {
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
         
         
-        let feed = templateNavigationController(image: UIImage(named: "home_unselected"), rootViewController: FeedController())
+        let feed = templateNavigationController(image: UIImage(named: "home_unselected"), rootViewController: FeedController(collectionViewLayout: UICollectionViewFlowLayout()))
         let explore = templateNavigationController(image: UIImage(named: "search_unselected"), rootViewController: ExploreController())
         let notifications = templateNavigationController(image: UIImage(named: "like_unselected"), rootViewController: NotificationController())
         let conversations = templateNavigationController(image: UIImage(named: "ic_mail_outline_white_2x-1"), rootViewController: ConversationsController())
