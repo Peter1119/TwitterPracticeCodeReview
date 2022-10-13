@@ -64,7 +64,6 @@ class UploadTweetViewController: UIViewController {
     }
     
     @objc func handleUploadTweet() {
-        
         guard let caption = captionTextView.text else { return }
         TweetService.shared.uploadTweet(caption: caption) { error, ref in
             if let error = error {
