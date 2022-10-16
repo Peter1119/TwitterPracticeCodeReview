@@ -7,12 +7,12 @@
 
 import FirebaseDatabase
 import FirebaseStorage
-let STORAGE_REF = Storage.storage().reference()
-let STORAGE_PROFILE_IMAGES = STORAGE_REF.child("profile_images")
+let storageRef = Storage.storage().reference()
+let storageProfileImages = storageRef.child("profile_images")
 
-let DB_REF = Database.database().reference()
-let REF_USERS = DB_REF.child("users")
-let REF_TWEETS = DB_REF.child("tweets")
-let REF_USER_TWEETS = DB_REF.child("user_tweets")
-let REF_USER_FOLLOWERS = DB_REF.child("user_followers")
-let REF_USER_FOLLOWING = DB_REF.child("user_following")
+let databaseRef = Database.database().reference()
+let userRef = databaseRef.child("users")
+let tweetsRef = databaseRef.child("tweets")
+let userTweetsRef = databaseRef.child("user_tweets")
+let userFollowerRef = databaseRef.child("user_followers")
+let userFollowingRef = databaseRef.child("user_following")

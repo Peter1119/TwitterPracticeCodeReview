@@ -34,7 +34,7 @@ struct AuthService {
         
         guard let imageData = credentials.profileImage.jpegData(compressionQuality: 0.3) else { return }
         let filename = NSUUID().uuidString
-        let storageRef = STORAGE_PROFILE_IMAGES.child(filename)
+        let storageRef = storageProfileImages.child(filename)
         
         storageRef.putData(imageData, metadata: nil) { (meta, error) in
             storageRef.downloadURL { (url, error) in
@@ -56,7 +56,7 @@ struct AuthService {
                                   "fullname": fullname,
                                   "profileImageUrl": profileImageUrl]
                     
-                    REF_USERS.child(uid).updateChildValues(values, withCompletionBlock: completion)
+                    userRef.child(uid).updateChildValues(values, withCompletionBlock: completion)
                 }
             }
         }

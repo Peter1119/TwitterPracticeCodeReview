@@ -8,87 +8,73 @@
 import UIKit
 import SDWebImage
 
-
 private let reuseIdentifier = "TweetCell"
 
 class FeedController: UICollectionViewController {
-    
-    //MARK: - Properties
-    
+
+    // MARK: - Properties
     var user: User? {
         didSet { configureLeftBarButton() }
     }
-    
     private var tweets = [Tweet]() {
         didSet { collectionView.reloadData() }
     }
-    
-    //MARK: - API
+    // MARK: - API
 
     func fetchTweets() {
         TweetService.shared.fetchTweets { tweets in
             self.tweets = tweets
         }
     }
-    
-    //MARK: - LifeCycle
-    
+    // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         fetchTweets()
-        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
     }
-    
-    //MARK: - Helpers
+    // MARK: - Helpers
 
     func configureUI() {
         view.backgroundColor = .white
-        
         collectionView.register(TweetCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView.backgroundColor = .white
-        
         let imageView = UIImageView(image: UIImage(named: "twitter_logo_blue"))
         imageView.contentMode = .scaleAspectFit
         imageView.setDimensions(width: 44, height: 44)
         navigationItem.titleView = imageView
     }
-    
     func configureLeftBarButton() {
         guard let user = user else { return }
         let profileImageView = UIImageView()
         profileImageView.setDimensions(width: 32, height: 32)
         profileImageView.layer.cornerRadius = 32 / 2
         profileImageView.layer.masksToBounds = true
-        
         profileImageView.sd_setImage(with: user.profileImageUrl, completed: nil)
         navigationController?.navigationBar.barStyle = .default
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: profileImageView)
     }
 }
 
-//MARK: - UICollectionViewDelegate/DataSource
-
+// MARK: - UICollectionViewDelegate/DataSource
 
 extension FeedController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return tweets.count
     }
-    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TweetCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? TweetCell
+        guard let cell = cell else {return UICollectionViewCell() }
         cell.delegate = self
         cell.tweet = tweets[indexPath.row]
         return cell
     }
 }
 
-//MARK: - UICollectionViewDelegateFlowLayout
+// MARK: - UICollectionViewDelegateFlowLayout
 
 extension FeedController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -96,7 +82,7 @@ extension FeedController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-//MARK: - TweetCellDelegate
+// MARK: - TweetCellDelegate
 
 extension FeedController: TweetCellDelegate {
     func handleProfileImageTapped(_ cell: TweetCell) {
