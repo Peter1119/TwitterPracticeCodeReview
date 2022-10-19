@@ -10,7 +10,7 @@ import UIKit
 private let reuseIdentifier = "UserCell"
 
 class ExploreController: UITableViewController {
-    //MARK: - Properties
+    // MARK: - Properties
     private var users = [User]() {
         didSet {
             tableView.reloadData()
@@ -25,7 +25,7 @@ class ExploreController: UITableViewController {
         return searchController.isActive && !searchController.searchBar.text!.isEmpty
     }
     private let searchController = UISearchController(searchResultsController: nil)
-    //MARK: - LifeCycle
+    // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -36,13 +36,13 @@ class ExploreController: UITableViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
     }
-    //MARK: - API
+    // MARK: - API
     func fetchUsers() {
         UserService.shared.fetchUsers { users in
             self.users = users
         }
     }
-    //MARK: - Helpers
+    // MARK: - Helpers
     func configureUI() {
         view.backgroundColor = .white
         navigationItem.title = "Explore"
@@ -60,7 +60,7 @@ class ExploreController: UITableViewController {
     }
 }
 
-//MARK: - UITableViewDataSource/Delegate
+// MARK: - UITableViewDataSource/Delegate
 
 extension ExploreController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -80,7 +80,7 @@ extension ExploreController {
     }
 }
 
-//MARK: - UISearchResultsUpdating
+// MARK: - UISearchResultsUpdating
 
 extension ExploreController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {

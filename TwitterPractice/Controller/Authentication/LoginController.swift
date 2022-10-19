@@ -40,7 +40,7 @@ class LoginController: UIViewController {
         tf.isSecureTextEntry = true
         return tf
     }()
-    private let loginButton: UIButton = {
+    private lazy var loginButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Log In", for: .normal)
         button.setTitleColor(.twitterBlue, for: .normal)
@@ -51,7 +51,7 @@ class LoginController: UIViewController {
         button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
         return button
     }()
-    private let dontHaveAccountButton: UIButton = {
+    private lazy var dontHaveAccountButton: UIButton = {
         let button = Utilities().attributedButton("Dont Have an account", " Sign Up")
         button.addTarget(self, action: #selector(handleShowSignUp), for: .touchUpInside)
         return button
@@ -66,7 +66,7 @@ class LoginController: UIViewController {
     @objc func handleLogin() {
         guard let email = emailTextField.text else { return }
         guard let password = passwordTextField.text else { return }
-        AuthService.shared.logUserIn(withEmail: email, password: password) { result, error in
+        AuthService.shared.logUserIn(withEmail: email, password: password) { _, error in
             if let error = error {
                 print("DEBUG: Login Error \(error.localizedDescription)")
                 return
@@ -92,6 +92,6 @@ class LoginController: UIViewController {
         view.addSubview(stackview)
         stackview.anchor(top: logoImageView.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingLeft: 32, paddingRight: 32)
         view.addSubview(dontHaveAccountButton)
-        dontHaveAccountButton.anchor(left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingLeft: 40,paddingRight: 40)
+        dontHaveAccountButton.anchor(left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingLeft: 40, paddingRight: 40)
     }
 }

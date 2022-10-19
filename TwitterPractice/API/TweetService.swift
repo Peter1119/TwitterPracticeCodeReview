@@ -12,28 +12,21 @@ import FirebaseStorage
 
 struct TweetService {
     static let shared = TweetService()
-    
     func uploadTweet(caption: String, completion: @escaping(Error?, DatabaseReference) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        
-        let values = ["uid": uid, "timestamp": Int(NSDate().timeIntervalSince1970), "likes":0, "retweets":0, "caption": caption] as [String : Any]
-        
+        let values = ["uid": uid, "timestamp": Int(NSDate().timeIntervalSince1970), "likes": 0, "retweets": 0, "caption": caption] as [String: Any]
         let ref = tweetsRef.childByAutoId()
-        
-        ref.updateChildValues(values) { error, ref in
+        ref.updateChildValues(values) { _, ref in
             guard let tweetID = ref.key else { return }
             userTweetsRef.child(uid).updateChildValues([tweetID: 1], withCompletionBlock: completion)
         }
     }
-    
     func fetchTweets(completion: @escaping([Tweet]) -> Void) {
         var tweets = [Tweet]()
-        
         tweetsRef.observe(.childAdded) { snapshot in
             guard let dictionary = snapshot.value as? [String: Any] else { return }
             guard let uid = dictionary["uid"] as? String else { return }
             let tweetID = snapshot.key
-            
             UserService.shared.fetchUser(uid: uid) { user in
                 let tweet = Tweet(user: user, tweetID: tweetID, dictionary: dictionary)
                 tweets.append(tweet)
@@ -41,13 +34,10 @@ struct TweetService {
             }
         }
     }
-    
     func fetchTweets(forUser user: User, completion: @escaping([Tweet]) -> Void) {
         var tweets = [Tweet]()
-        
         userTweetsRef.child(user.uid).observe(.childAdded) { snapshot in
             let tweetID = snapshot.key
-            
             tweetsRef.child(tweetID).observeSingleEvent(of: .value) { snapshot in
                 guard let dictionary = snapshot.value as? [String: Any] else { return }
                 guard let uid = dictionary["uid"] as? String else { return }

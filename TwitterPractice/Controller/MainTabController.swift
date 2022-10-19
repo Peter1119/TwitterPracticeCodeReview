@@ -12,18 +12,15 @@ import FirebaseDatabase
 
 class MainTabController: UITabBarController {
 
-    //MARK: - Properties
-    
+    // MARK: - Properties
     var user: User? {
         didSet {
             guard let nav = viewControllers?[0] as? UINavigationController else { return }
             guard let feed = nav.viewControllers.first as? FeedController else { return }
-            
             feed.user = user
         }
     }
-    
-    let actionButton: UIButton = {
+    lazy var actionButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = .white
         button.backgroundColor = .twitterBlue
@@ -31,15 +28,13 @@ class MainTabController: UITabBarController {
         button.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
         return button
     }()
-    
-    //MARK: - LifeCycle
+    // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .twitterBlue
 //        logUserOut()
         authenticateUserAndConfigureUI()
     }
-    
     @objc func actionButtonTapped() {
         guard let user = user else { return }
         let controller = UploadTweetViewController(user: user)
@@ -47,15 +42,13 @@ class MainTabController: UITabBarController {
         nav.modalPresentationStyle = .fullScreen
         present(nav, animated: true)
     }
-    
-    //MARK: - API
+    // MARK: - API
     func fetchUser() {
         guard let uid = Auth.auth().currentUser?.uid else { return}
         UserService.shared.fetchUser(uid: uid) { user in
             self.user = user
         }
     }
-    
     func authenticateUserAndConfigureUI() {
         if Auth.auth().currentUser == nil {
             DispatchQueue.main.async {
@@ -77,31 +70,25 @@ class MainTabController: UITabBarController {
             print("DEBUG: Failed to sign out with error \(error.localizedDescription)")
         }
     }
-    //MARK: - Helpers
-    
+    // MARK: - Helpers
     func configureUI() {
         view.addSubview(actionButton)
         actionButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingBottom: 64, paddingRight: 16, width: 56, height: 56)
         actionButton.layer.cornerRadius = 56 / 2
     }
-    
     func configureViewControllers() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = UIColor.systemBackground
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
-        
-        
         let feed = templateNavigationController(image: UIImage(named: "home_unselected"), rootViewController: FeedController(collectionViewLayout: UICollectionViewFlowLayout()))
         let explore = templateNavigationController(image: UIImage(named: "search_unselected"), rootViewController: ExploreController())
         let notifications = templateNavigationController(image: UIImage(named: "like_unselected"), rootViewController: NotificationController())
         let conversations = templateNavigationController(image: UIImage(named: "ic_mail_outline_white_2x-1"), rootViewController: ConversationsController())
-        
         viewControllers = [feed, explore, notifications, conversations]
         tabBar.backgroundColor = .systemBackground
     }
-    
     func templateNavigationController(image: UIImage?, rootViewController: UIViewController) -> UINavigationController {
         let nav = UINavigationController(rootViewController: rootViewController)
         nav.tabBarItem.image = image

@@ -12,10 +12,10 @@ import FirebaseAuth
 import FirebaseDatabase
 
 class RegisterationController: UIViewController {
-    //MARK: - Properties
+    // MARK: - Properties
     private let imagePicker = UIImagePickerController()
     private var profileImage: UIImage?
-    private let plusPhotoButton: UIButton = {
+    private lazy var plusPhotoButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "plus_photo"), for: .normal)
         button.tintColor = .white
@@ -39,7 +39,7 @@ class RegisterationController: UIViewController {
         return view
     }()
     private lazy var stackview: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [emailContainerView, passwordContainerView, fullnameContainerView, usernameContainerView,  registrationButton])
+        let stackView = UIStackView(arrangedSubviews: [emailContainerView, passwordContainerView, fullnameContainerView, usernameContainerView, registrationButton])
         stackView.axis = .vertical
         stackView.spacing = 20
         stackView.distribution = .fillEqually
@@ -62,7 +62,7 @@ class RegisterationController: UIViewController {
         let tf = Utilities().textField(withPlaceholder: "Username")
         return tf
     }()
-    private let registrationButton: UIButton = {
+    private lazy var registrationButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Sign Up", for: .normal)
         button.setTitleColor(.twitterBlue, for: .normal)
@@ -73,25 +73,25 @@ class RegisterationController: UIViewController {
         button.addTarget(self, action: #selector(handleRegistration), for: .touchUpInside)
         return button
     }()
-    private let alreadyHaveAccountButton: UIButton = {
+    private lazy var alreadyHaveAccountButton: UIButton = {
         let button = Utilities().attributedButton("Already Have an account", " Log In")
         button.addTarget(self, action: #selector(handleShowLogin), for: .touchUpInside)
         return button
     }()
-    //MARK: - LifeCycle
+    // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
     }
-    //MARK: - Selectors
+    // MARK: - Selectors
     @objc func handleAddProfilePhoto() {
-        present(imagePicker, animated: true,completion: nil)
+        present(imagePicker, animated: true, completion: nil)
     }
     @objc func handleShowLogin() {
         navigationController?.popViewController(animated: true)
     }
     @objc func handleRegistration() {
-        //프로필 이미지 등록 안됐을때
+        // 프로필 이미지 등록 안됐을때
         guard let profileImage = profileImage else {
             print("프로필 이미지를 등록해 주세요!")
             return
@@ -101,14 +101,14 @@ class RegisterationController: UIViewController {
         guard let fullname = fullnameTextField.text else { return }
         guard let username = usernameTextField.text?.lowercased() else { return }
         let credentials = AuthCredentials(email: email, password: password, fullname: fullname, username: username, profileImage: profileImage)
-        AuthService.shared.registerUser(credentials: credentials) { error, ref in
+        AuthService.shared.registerUser(credentials: credentials) { _, _ in
             guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
             guard let tab = window.rootViewController as? MainTabController else { return }
             tab.authenticateUserAndConfigureUI()
             self.dismiss(animated: true)
         }
     }
-    //MARK: - Helpers
+    // MARK: - Helpers
     func configureUI() {
         view.backgroundColor = .twitterBlue
         imagePicker.delegate = self
@@ -119,16 +119,16 @@ class RegisterationController: UIViewController {
         plusPhotoButton.centerX(inView: view, topAnchor: view.safeAreaLayoutGuide.topAnchor)
         plusPhotoButton.setDimensions(width: 128, height: 128)
         view.addSubview(stackview)
-        stackview.anchor(top: plusPhotoButton.bottomAnchor, left: view.leftAnchor,right: view.rightAnchor,paddingTop: 32 ,paddingLeft: 32, paddingRight: 32)
+        stackview.anchor(top: plusPhotoButton.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 32, paddingLeft: 32, paddingRight: 32)
         view.addSubview(alreadyHaveAccountButton)
-        alreadyHaveAccountButton.anchor(left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingLeft: 40,paddingRight: 40)
+        alreadyHaveAccountButton.anchor(left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingLeft: 40, paddingRight: 40)
     }
 }
 
-//MARK: - UIImagePickerControllerDelegate
+// MARK: - UIImagePickerControllerDelegate
 
 extension RegisterationController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         guard let profileImage = info[.editedImage] as? UIImage else { return }
         self.profileImage = profileImage
         plusPhotoButton.layer.cornerRadius = 128 / 2

@@ -13,8 +13,6 @@ private let headerIdentifier = "ProfileHeader"
 class ProfileController: UICollectionViewController {
     // MARK: - Properties
     private var user: User
-    
-    
     private var tweets = [Tweet]() {
         didSet { collectionView.reloadData() }
     }
@@ -80,7 +78,7 @@ extension ProfileController {
     }
 }
 
-//MARK: - UICollectionViewDelegate
+// MARK: - UICollectionViewDelegate
 
 extension ProfileController {
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -110,18 +108,17 @@ extension ProfileController: ProfileHeaderDelegate {
             return
         }
         if user.isFollowed {
-            UserService.shared.unfollowUser(uid: user.uid) { error, ref in
+            UserService.shared.unfollowUser(uid: user.uid) { _, _ in
                 self.user.isFollowed = false
                 self.collectionView.reloadData()
             }
         } else {
-            UserService.shared.followUser(uid: user.uid) { error, ref in
+            UserService.shared.followUser(uid: user.uid) { _, _ in
                 self.user.isFollowed = true
                 self.collectionView.reloadData()
             }
         }
     }
-    
     func handleDismissal() {
         navigationController?.popViewController(animated: true)
     }

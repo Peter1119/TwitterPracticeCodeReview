@@ -25,7 +25,7 @@ class ProfileFillterView: UIView {
         return cv
     }()
 
-    // MARK: -  Lifecycle
+    // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         collectionView.register(ProfileFilterCell.self, forCellWithReuseIdentifier: reuseIdentifier)
