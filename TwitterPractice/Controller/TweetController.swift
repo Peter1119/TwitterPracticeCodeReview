@@ -13,6 +13,9 @@ class TweetController: UICollectionViewController {
 
     // MARK: - Properties
     private let tweet: Tweet
+    private var replies = [Tweet]() {
+        didSet { collectionView.reloadData() }
+    }
     // MARK: - Lifecycle
     init(tweet: Tweet) {
         self.tweet = tweet
@@ -24,8 +27,15 @@ class TweetController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionView()
+        fetchReplies()
     }
-
+    // MARK: - API
+    func fetchReplies() {
+        TweetService.shared.fetchReplies(fortweet: tweet) { replies in
+            self.replies = replies
+        }
+    }
+    // MARK: - Helpers
     func configureCollectionView() {
         collectionView.backgroundColor = .white
         collectionView.register(TweetCell.self, forCellWithReuseIdentifier: reuseIdentifier)
@@ -37,11 +47,12 @@ class TweetController: UICollectionViewController {
 
 extension TweetController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return replies.count
     }
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? TweetCell
         guard let cell = cell else { return UICollectionViewCell() }
+        cell.tweet = replies[indexPath.row]
         return cell
     }
 }
@@ -52,6 +63,7 @@ extension TweetController {
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerIdentifier, for: indexPath) as? TweetHeader
         guard let header = header else { return UICollectionReusableView() }
+        header.tweet = tweet
         return header
     }
 }
@@ -60,7 +72,9 @@ extension TweetController {
 
 extension TweetController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 350)
+        let viewModel = TweetViewModel(tweet: tweet)
+        let captionHeight = viewModel.size(forwidth: view.frame.width).height
+        return CGSize(width: view.frame.width, height: captionHeight + 260)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width, height: 120)
