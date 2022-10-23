@@ -7,11 +7,15 @@
 
 import UIKit
 
+protocol TweetHeaderDelegate: AnyObject {
+    func showActionSheet()
+}
 class TweetHeader: UICollectionReusableView {
     // MARK: - Properties
     var tweet: Tweet? {
         didSet { configure() }
     }
+    weak var delegate: TweetHeaderDelegate?
     private lazy var profileImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
@@ -131,7 +135,7 @@ class TweetHeader: UICollectionReusableView {
     @objc func handleProfileImageTapped() {
     }
     @objc func showActionSheet() {
-        print("버튼 누르기")
+        delegate?.showActionSheet()
     }
     @objc func handleCommentTaped() {
     }
