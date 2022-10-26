@@ -11,7 +11,6 @@ import SDWebImage
 private let reuseIdentifier = "TweetCell"
 
 class FeedController: UICollectionViewController {
-
     // MARK: - Properties
     // MainTabController에서 받아온 user값이 전달될 경우 didSet이 실행.
     var user: User? {
@@ -21,10 +20,18 @@ class FeedController: UICollectionViewController {
         didSet { collectionView.reloadData() }
     }
     // MARK: - API
-
     func fetchTweets() {
         TweetService.shared.fetchTweets { tweets in
             self.tweets = tweets
+            self.checkIfUserLikedTweets(tweets)
+        }
+    }
+    func checkIfUserLikedTweets(_ tweets: [Tweet]) {
+        for (index, tweet) in tweets.enumerated() {
+            TweetService.shared.checkIfUserLikedTweet(tweet) { didLike in
+                guard didLike == true else { return }
+                self.tweets[index].didLike = true
+            }
         }
     }
     // MARK: - LifeCycle
@@ -38,7 +45,6 @@ class FeedController: UICollectionViewController {
         navigationController?.navigationBar.isHidden = false
     }
     // MARK: - Helpers
-
     func configureUI() {
         view.backgroundColor = .white
         collectionView.register(TweetCell.self, forCellWithReuseIdentifier: reuseIdentifier)
@@ -92,13 +98,23 @@ extension FeedController: UICollectionViewDelegateFlowLayout {
 // MARK: - TweetCellDelegate
 
 extension FeedController: TweetCellDelegate {
+    func handleLikeTapped(_ cell: TweetCell) {
+        guard let tweet = cell.tweet else { return }
+        TweetService.shared.likeTweet(tweet: tweet) { _, _ in
+            cell.tweet?.didLike.toggle()
+            let likes = tweet.didLike ? tweet.likes - 1 : tweet.likes + 1
+            cell.tweet?.likes = likes
+            guard !tweet.didLike else { return }
+            NotificationService.shared.uploadNotification(type: .like, tweet: tweet)
+        }
+    }
     func handleProfileImageTapped(_ cell: TweetCell) {
         guard let user = cell.tweet?.user else { return }
         let controller = ProfileController(user: user)
         navigationController?.pushViewController(controller, animated: true)
     }
     func handleReplyTapped(_ cell: TweetCell) {
-        guard let tweet = cell.tweet else { return}
+        guard let tweet = cell.tweet else { return }
         let controller = UploadTweetViewController(user: tweet.user, config: .reply(tweet))
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .fullScreen

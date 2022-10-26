@@ -97,11 +97,20 @@ class ProfileHeader: UICollectionReusableView {
         super.init(frame: frame)
         filterBar.delegate = self
         addSubview(filterBar)
-        filterBar.anchor(left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, height: 50)
+        filterBar.anchor(left: leftAnchor,
+                         bottom: bottomAnchor,
+                         right: rightAnchor, 
+                         height: 50)
         addSubview(containerView)
-        containerView.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, height: 108)
+        containerView.anchor(top: topAnchor,
+                             left: leftAnchor,
+                             right: rightAnchor,
+                             height: 108)
         addSubview(profileImageView)
-        profileImageView.anchor(top: containerView.bottomAnchor, left: leftAnchor, paddingTop: -24, paddingLeft: 8)
+        profileImageView.anchor(top: containerView.bottomAnchor,
+                                left: leftAnchor,
+                                paddingTop: -24,
+                                paddingLeft: 8)
         profileImageView.setDimensions(width: 80, height: 80)
         profileImageView.layer.cornerRadius = 80 / 2
         addSubview(editProfileFollowButton)

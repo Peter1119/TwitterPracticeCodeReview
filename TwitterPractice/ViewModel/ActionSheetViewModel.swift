@@ -18,7 +18,7 @@ struct ActionSheetViewModel {
             results.append(followOption)
         }
         results.append(.report)
-        return results
+    return results
     }
     init(user: User) {
         self.user = user

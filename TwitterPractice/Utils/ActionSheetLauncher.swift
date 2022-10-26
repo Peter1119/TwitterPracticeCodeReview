@@ -51,6 +51,7 @@ class ActionSheetLauncher: NSObject {
         super.init()
         configureTableView()
     }
+    
     // MARK: - Selectors
     @objc func handleDismissal() {
         UIView.animate(withDuration: 0.5) {

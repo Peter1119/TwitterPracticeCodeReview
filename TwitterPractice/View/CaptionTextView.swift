@@ -34,5 +34,4 @@ class CaptionTextView: UITextView {
     @objc func handleTextInputChange() {
         placeholderLabel.isHidden = !text.isEmpty
     }
-
 }
