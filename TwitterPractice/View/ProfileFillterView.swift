@@ -10,7 +10,7 @@ import UIKit
 private let reuseIdentifier = "ProfileFilterCell"
 
 protocol ProfileFilterViewDelegate: AnyObject {
-    func filterView(_ view: ProfileFillterView, didSelect indexPath: IndexPath)
+    func filterView(_ view: ProfileFillterView, didSelect index: Int)
 }
 
 class ProfileFillterView: UIView {
@@ -24,7 +24,12 @@ class ProfileFillterView: UIView {
         cv.dataSource = self
         return cv
     }()
-
+    private let underlineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .twitterBlue
+        return view
+    }()
+    
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,6 +38,13 @@ class ProfileFillterView: UIView {
         collectionView.selectItem(at: selectedIndexPath, animated: true, scrollPosition: .left)
         addSubview(collectionView)
         collectionView.addConstraintsToFillView(self)
+    }
+    override func layoutSubviews() {
+        addSubview(underlineView)
+        underlineView.anchor(left: leftAnchor,
+                             bottom: bottomAnchor,
+                             width: frame.width / 3,
+                             height: 2)
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -45,13 +57,27 @@ extension ProfileFillterView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return ProfileFilterOptions.allCases.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? ProfileFilterCell
         guard let cell = cell else { return UICollectionViewCell() }
         let option = ProfileFilterOptions(rawValue: indexPath.row)
         cell.option = option
         return cell
+    }
+}
+// MARK: - UICollectionViewDelegate
+extension ProfileFillterView: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let cell = collectionView.cellForItem(at: indexPath)
+        let xPosition = cell?.frame.origin.x ?? 0
+        
+        UIView.animate(withDuration: 0.3) {
+            self.underlineView.frame.origin.x = xPosition
+        }
+        delegate?.filterView(self, didSelect: indexPath.row)
+        
     }
 }
 
@@ -64,11 +90,5 @@ extension ProfileFillterView: UICollectionViewDelegateFlowLayout {
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
-    }
-}
-
-extension ProfileFillterView: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.filterView(self, didSelect: indexPath)
     }
 }

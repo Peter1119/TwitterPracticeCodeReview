@@ -49,10 +49,24 @@ struct TweetViewModel {
         let imageName = tweet.didLike ? "like_filled" : "like"
         return UIImage(named: imageName)!
     }
+    
+    var shouldHideReplyLabel: Bool {
+        return !tweet.isReply
+    }
+    
+    var replyText: String? {
+        guard let replyingToUsername = tweet.replyingTo else { return nil }
+        return " replying to @\(replyingToUsername)"
+    }
+    
+    // MARK: - Lifecycle
+
     init(tweet: Tweet) {
         self.tweet = tweet
         self.user = tweet.user
     }
+    // MARK: - Helpers
+
     fileprivate func attributedText(withValue value: Int, text: String) -> NSAttributedString {
         let attributedTitle = NSMutableAttributedString(string: "\(value)", attributes: [.font: UIFont.boldSystemFont(ofSize: 14)])
         attributedTitle.append(NSAttributedString(string: " \(text)", attributes: [.font: UIFont.systemFont(ofSize: 14), .foregroundColor: UIColor.lightGray]))
