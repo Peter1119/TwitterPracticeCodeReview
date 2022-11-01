@@ -44,6 +44,9 @@ struct EditProfileViewModel {
     var shouldHideTextView: Bool {
         return option != .bio
     }
+    var shouldHidePlaceholderLabel: Bool {
+        return user.bio != nil
+    }
     
     init(user: User, option: EditProfileOptions) {
         self.user = user

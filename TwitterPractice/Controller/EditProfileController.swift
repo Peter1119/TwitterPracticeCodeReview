@@ -9,11 +9,24 @@ import UIKit
 
 private let reuserIdentifier = "EditProfileCell"
 
+protocol EditProfileControllerDelegate: AnyObject {
+    func controller(_ controller: EditProfileController, wantsToUpdate user: User)
+}
+
 class EditProfileController: UITableViewController {
     // MARK: - Properties
     private var user: User
     private lazy var headerView = EditProfileHeader(user: user)
     private let imagePicker = UIImagePickerController()
+    
+    private var userInfoChanged = false
+    
+    weak var delegate: EditProfileControllerDelegate?
+    
+    private var imageChanged: Bool {
+        return selectedImage != nil
+    }
+    
     private var selectedImage: UIImage? {
         didSet { headerView.profileImageView.image = selectedImage }
     }
@@ -40,10 +53,40 @@ class EditProfileController: UITableViewController {
         dismiss(animated: true)
     }
     @objc func handleDone() {
-        dismiss(animated: true)
+        view.endEditing(true)
+        guard imageChanged || userInfoChanged else { return }
+        
+        updateUserData()
     }
     
     // MARK: - API
+    
+    func updateUserData() {
+        if imageChanged && !userInfoChanged {
+            updateProfileImage()
+        }
+        
+        if userInfoChanged && !imageChanged {
+            UserService.shared.saveUserData(user: user) { err, ref in
+                self.delegate?.controller(self, wantsToUpdate: self.user)
+            }
+        }
+        
+        if userInfoChanged && imageChanged {
+            UserService.shared.saveUserData(user: user) { err, ref in
+                self.updateProfileImage()
+            }
+        }
+    }
+    
+    func updateProfileImage() {
+        guard let image = selectedImage else { return }
+        
+        UserService.shared.updateProfileImage(image: image) { profileImageUrl in
+            self.user.profileImageUrl = profileImageUrl
+            self.delegate?.controller(self, wantsToUpdate: self.user)
+        }
+    }
     
     // MARK: - Helpers
     
@@ -62,7 +105,7 @@ class EditProfileController: UITableViewController {
         navigationItem.titleView?.tintColor = .white
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(handleCancel))
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(handleDone))
-        navigationItem.rightBarButtonItem?.isEnabled = false
+        
     }
     
     func configureTableView() {
@@ -82,6 +125,7 @@ class EditProfileController: UITableViewController {
     }
 
 }
+// MARK: - UITableViewDataSource
 
 extension EditProfileController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -105,12 +149,17 @@ extension EditProfileController {
         return option == .bio ? 100 : 48
     }
 }
+// MARK: - UITableviewDelegate
+
 
 extension EditProfileController: EditProfileHeaderDelegate {
     func didTapChangeProfilePhoto() {
         present(imagePicker, animated: true)
     }
 }
+
+// MARK: - UIImagePickerControllerDelegate
+
 
 extension EditProfileController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -120,10 +169,14 @@ extension EditProfileController: UIImagePickerControllerDelegate, UINavigationCo
         dismiss(animated: true)
     }
 }
+// MARK: - EditProfileCellDelegate
+
 
 extension EditProfileController: EditProfileCellDelegate {
     func updateUserInfo(_ cell: EditProfileCell) {
         guard let viewModel = cell.viewModel else { return }
+        userInfoChanged = true
+        navigationItem.rightBarButtonItem?.isEnabled = true
         
         switch viewModel.option {
             
@@ -136,8 +189,5 @@ extension EditProfileController: EditProfileCellDelegate {
         case .bio:
             user.bio = cell.bioTextView.text
         }
-        print(user.fullname)
-        print(user.username)
-        print(user.bio)
     }
 }
