@@ -46,7 +46,7 @@ class UploadTweetViewController: UIViewController {
         label.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
         return label
     }()
-    private let captionTextView = CaptionTextView()
+    private let captionTextView = InputTextView()
     // MARK: - LifeCycle
     init(user: User, config: UPloadTweetConfiguration) {
         self.user = user

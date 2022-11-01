@@ -11,7 +11,7 @@ import FirebaseStorage
 import FirebaseDatabase
 
 class MainTabController: UITabBarController {
-
+    
     // MARK: - Properties
     var user: User? {
         didSet {
@@ -32,8 +32,17 @@ class MainTabController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .twitterBlue
-//        logUserOut()
+        //        logUserOut()
         authenticateUserAndConfigureUI()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor.systemBackground
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        tabBar.backgroundColor = .systemBackground
     }
     @objc func actionButtonTapped() {
         guard let user = user else { return }
@@ -62,7 +71,7 @@ class MainTabController: UITabBarController {
             fetchUser()
         }
     }
-
+    
     func logUserOut() {
         do {
             try Auth.auth().signOut()
@@ -77,17 +86,12 @@ class MainTabController: UITabBarController {
         actionButton.layer.cornerRadius = 56 / 2
     }
     func configureViewControllers() {
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = UIColor.systemBackground
-        UINavigationBar.appearance().standardAppearance = appearance
-        UINavigationBar.appearance().scrollEdgeAppearance = appearance
         let feed = templateNavigationController(image: UIImage(named: "home_unselected"), rootViewController: FeedController(collectionViewLayout: UICollectionViewFlowLayout()))
         let explore = templateNavigationController(image: UIImage(named: "search_unselected"), rootViewController: ExploreController())
         let notifications = templateNavigationController(image: UIImage(named: "like_unselected"), rootViewController: NotificationController())
         let conversations = templateNavigationController(image: UIImage(named: "ic_mail_outline_white_2x-1"), rootViewController: ConversationsController())
         viewControllers = [feed, explore, notifications, conversations]
-        tabBar.backgroundColor = .systemBackground
+        
     }
     func templateNavigationController(image: UIImage?, rootViewController: UIViewController) -> UINavigationController {
         let nav = UINavigationController(rootViewController: rootViewController)
