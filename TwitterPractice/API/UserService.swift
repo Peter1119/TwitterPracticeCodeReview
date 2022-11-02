@@ -87,4 +87,11 @@ struct UserService {
         
         userRef.child(uid).updateChildValues(values, withCompletionBlock: completion)
     }
+    
+    func fetchUser(WithUsername username: String, completion: @escaping(User) -> Void) {
+        userNamesRef.child(username).observeSingleEvent(of: .value) { snapshot in
+            guard let uid = snapshot.value as? String else { return }
+            self.fetchUser(uid: uid, completion: completion)
+        }
+    }
 }

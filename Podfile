@@ -12,4 +12,5 @@ target 'TwitterPractice' do
 	pod 'FirebaseDatabase'
   pod 'SDWebImage', '~> 5.0'
   pod 'SwiftLint'
+  pod 'ActiveLabel'
 end
