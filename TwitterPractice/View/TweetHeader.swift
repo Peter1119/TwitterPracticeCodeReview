@@ -97,22 +97,22 @@ class TweetHeader: UICollectionReusableView {
     }()
     private lazy var commentButton: UIButton = {
         let button = createButton(withImageName: "comment")
-        button.addTarget(self, action: #selector(handleCommentTaped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleCommentTapped), for: .touchUpInside)
         return button
     }()
     private lazy var retweetButton: UIButton = {
         let button = createButton(withImageName: "retweet")
-        button.addTarget(self, action: #selector(handleRetweetTaped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleRetweetTapped), for: .touchUpInside)
         return button
     }()
     private lazy var likeButton: UIButton = {
         let button = createButton(withImageName: "like")
-        button.addTarget(self, action: #selector(handleLikeTaped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleLikeTapped), for: .touchUpInside)
         return button
     }()
     private lazy var shareButton: UIButton = {
         let button = createButton(withImageName: "share")
-        button.addTarget(self, action: #selector(handleShareTaped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleShareTapped), for: .touchUpInside)
         return button
     }()
     // MARK: - Lifecycle
@@ -164,13 +164,13 @@ class TweetHeader: UICollectionReusableView {
     @objc func showActionSheet() {
         delegate?.showActionSheet()
     }
-    @objc func handleCommentTaped() {
+    @objc func handleCommentTapped() {
     }
-    @objc func handleRetweetTaped() {
+    @objc func handleRetweetTapped() {
     }
-    @objc func handleLikeTaped() {
+    @objc func handleLikeTapped() {
     }
-    @objc func handleShareTaped() {
+    @objc func handleShareTapped() {
     }
     // MARK: - Helpers
     func configure() {

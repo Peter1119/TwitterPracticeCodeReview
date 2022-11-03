@@ -11,12 +11,14 @@ private let reuserIdentifier = "EditProfileCell"
 
 protocol EditProfileControllerDelegate: AnyObject {
     func controller(_ controller: EditProfileController, wantsToUpdate user: User)
+    func handleLogout()
 }
 
 class EditProfileController: UITableViewController {
     // MARK: - Properties
     private var user: User
     private lazy var headerView = EditProfileHeader(user: user)
+    private let footerView = EditProfileFooter()
     private let imagePicker = UIImagePickerController()
     
     private var userInfoChanged = false
@@ -111,9 +113,13 @@ class EditProfileController: UITableViewController {
     func configureTableView() {
         tableView.tableHeaderView = headerView
         headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 180)
-        tableView.tableFooterView = UIView()
-        
         headerView.delegate = self
+        
+        footerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 100)
+        tableView.tableFooterView = footerView
+        footerView.delegate = self
+        
+        
         
         tableView.register(EditProfileCell.self, forCellReuseIdentifier: reuserIdentifier)
     }
@@ -151,7 +157,6 @@ extension EditProfileController {
 }
 // MARK: - UITableviewDelegate
 
-
 extension EditProfileController: EditProfileHeaderDelegate {
     func didTapChangeProfilePhoto() {
         present(imagePicker, animated: true)
@@ -160,9 +165,8 @@ extension EditProfileController: EditProfileHeaderDelegate {
 
 // MARK: - UIImagePickerControllerDelegate
 
-
 extension EditProfileController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         
         guard let image = info[.editedImage] as? UIImage else { return }
         self.selectedImage = image
@@ -170,7 +174,6 @@ extension EditProfileController: UIImagePickerControllerDelegate, UINavigationCo
     }
 }
 // MARK: - EditProfileCellDelegate
-
 
 extension EditProfileController: EditProfileCellDelegate {
     func updateUserInfo(_ cell: EditProfileCell) {
@@ -190,4 +193,21 @@ extension EditProfileController: EditProfileCellDelegate {
             user.bio = cell.bioTextView.text
         }
     }
+}
+
+extension EditProfileController: EditProfileFooterDelegate {
+    
+    func handleLogout() {
+        let alret = UIAlertController(title: nil, message: "Are you sure you want to log out?", preferredStyle: .actionSheet)
+        alret.addAction(UIAlertAction(title: "Log out", style: .destructive, handler: { _ in
+            self.dismiss(animated: true) {
+                self.delegate?.handleLogout()
+            }
+        }))
+        
+        alret.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        present(alret, animated: true)
+    }
+    
 }

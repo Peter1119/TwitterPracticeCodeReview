@@ -55,6 +55,14 @@ class FeedController: UICollectionViewController {
     @objc func handleRefresh() {
         fetchTweets()
     }
+    
+    @objc func handleProfileImageTap() {
+        guard let user = user else { return }
+        
+        let controller = ProfileController(user: user)
+        navigationController?.pushViewController(controller, animated: true)
+        
+    }
 
     // MARK: - Helpers
     func configureUI() {
@@ -72,13 +80,22 @@ class FeedController: UICollectionViewController {
     }
     func configureLeftBarButton() {
         guard let user = user else { return }
+        
         let profileImageView = UIImageView()
         profileImageView.setDimensions(width: 32, height: 32)
         profileImageView.layer.cornerRadius = 32 / 2
         profileImageView.layer.masksToBounds = true
+        profileImageView.isUserInteractionEnabled = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleProfileImageTap))
+        profileImageView.addGestureRecognizer(tap)
+        
         profileImageView.sd_setImage(with: user.profileImageUrl, completed: nil)
+
         navigationController?.navigationBar.barStyle = .default
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: profileImageView)
+        
+        
     }
 }
 
@@ -128,7 +145,7 @@ extension FeedController: TweetCellDelegate {
             let likes = tweet.didLike ? tweet.likes - 1 : tweet.likes + 1
             cell.tweet?.likes = likes
             guard !tweet.didLike else { return }
-            NotificationService.shared.uploadNotification(type: .like, tweet: tweet)
+            NotificationService.shared.uploadNotification(toUser: tweet.user, type: .like, tweetID: tweet.tweetID)
         }
     }
     func handleProfileImageTapped(_ cell: TweetCell) {
