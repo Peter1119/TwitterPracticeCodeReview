@@ -71,7 +71,6 @@ class MainTabController: UITabBarController {
         }
     }
     
-    
     // MARK: - Helpers
     func configureUI() {
         view.addSubview(actionButton)

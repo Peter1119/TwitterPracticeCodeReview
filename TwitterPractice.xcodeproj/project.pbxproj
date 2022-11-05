@@ -43,6 +43,8 @@
 		639EA21A28F65A6A00564ED9 /* ProfileHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639EA21928F65A6A00564ED9 /* ProfileHeaderViewModel.swift */; };
 		639EA21C28F6919900564ED9 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639EA21B28F6919900564ED9 /* UserCell.swift */; };
 		63C5ADF72914139C0061132B /* EditProfileFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C5ADF62914139C0061132B /* EditProfileFooter.swift */; };
+		63C5ADF92916A6260061132B /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C5ADF82916A6260061132B /* LoginViewModel.swift */; };
+		63C5ADFB2916AC8C0061132B /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C5ADFA2916AC8C0061132B /* RegisterViewModel.swift */; };
 		63D0BA6A28FC4313009F369A /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 63D0BA6928FC4313009F369A /* .swiftlint.yml */; };
 		63D0BA6C29003714009F369A /* TweetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D0BA6B29003714009F369A /* TweetController.swift */; };
 		63D0BA6E29003A6D009F369A /* TweetHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D0BA6D29003A6D009F369A /* TweetHeader.swift */; };
@@ -97,6 +99,8 @@
 		639EA21928F65A6A00564ED9 /* ProfileHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderViewModel.swift; sourceTree = "<group>"; };
 		639EA21B28F6919900564ED9 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		63C5ADF62914139C0061132B /* EditProfileFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileFooter.swift; sourceTree = "<group>"; };
+		63C5ADF82916A6260061132B /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		63C5ADFA2916AC8C0061132B /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		63D0BA6928FC4313009F369A /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		63D0BA6B29003714009F369A /* TweetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetController.swift; sourceTree = "<group>"; };
 		63D0BA6D29003A6D009F369A /* TweetHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetHeader.swift; sourceTree = "<group>"; };
@@ -230,6 +234,7 @@
 		639EA1FA28EFF7E800564ED9 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				63C5ADFC2916AEAC0061132B /* Authentication */,
 				639EA20F28F54B1B00564ED9 /* TweetViewModel.swift */,
 				639EA21928F65A6A00564ED9 /* ProfileHeaderViewModel.swift */,
 				63D0BA6F2903DE0B009F369A /* UploadTweetViewModel.swift */,
@@ -259,6 +264,15 @@
 				63D0BA792906B002009F369A /* NotificationService.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		63C5ADFC2916AEAC0061132B /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				63C5ADF82916A6260061132B /* LoginViewModel.swift */,
+				63C5ADFA2916AC8C0061132B /* RegisterViewModel.swift */,
+			);
+			path = Authentication;
 			sourceTree = "<group>";
 		};
 		74627F6172BBC51A2F2AC8C8 /* Frameworks */ = {
@@ -429,11 +443,13 @@
 				63D0BA6C29003714009F369A /* TweetController.swift in Sources */,
 				639EA21228F5720200564ED9 /* ProfileController.swift in Sources */,
 				63D0BA702903DE0B009F369A /* UploadTweetViewModel.swift in Sources */,
+				63C5ADFB2916AC8C0061132B /* RegisterViewModel.swift in Sources */,
 				639EA21428F5A38400564ED9 /* ProfileHeader.swift in Sources */,
 				63254B5C2911487000C90DEC /* EditProfileCell.swift in Sources */,
 				63254B5A291147ED00C90DEC /* EditProfileViewModel.swift in Sources */,
 				639EA20E28F5390900564ED9 /* TweetCell.swift in Sources */,
 				27F2E72E28EC465700CFE9F2 /* RegisterationController.swift in Sources */,
+				63C5ADF92916A6260061132B /* LoginViewModel.swift in Sources */,
 				63D0BA78290685B6009F369A /* Notification.swift in Sources */,
 				639EA20028F003E300564ED9 /* AuthService.swift in Sources */,
 				639EA21A28F65A6A00564ED9 /* ProfileHeaderViewModel.swift in Sources */,

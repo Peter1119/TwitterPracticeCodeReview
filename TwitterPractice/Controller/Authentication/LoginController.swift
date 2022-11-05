@@ -9,6 +9,9 @@ import UIKit
 
 class LoginController: UIViewController {
     // MARK: - Properties
+    
+    var viewModel = LoginViewModel()
+    
     private let logoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -66,7 +69,8 @@ class LoginController: UIViewController {
     @objc func handleLogin() {
         guard let email = emailTextField.text else { return }
         guard let password = passwordTextField.text else { return }
-        AuthService.shared.logUserIn(withEmail: email, password: password) { _, error in
+        
+        viewModel.userLogin(email: email, password: password) {_, error in
             if let error = error {
                 print("DEBUG: Login Error \(error.localizedDescription)")
                 return
@@ -86,12 +90,19 @@ class LoginController: UIViewController {
         view.backgroundColor = .twitterBlue
         navigationController?.navigationBar.isHidden = true
         navigationController?.navigationBar.barStyle = .black
+        
         view.addSubview(logoImageView)
         logoImageView.centerX(inView: view, topAnchor: view.safeAreaLayoutGuide.topAnchor)
         logoImageView.setDimensions(width: 150, height: 150)
+        
         view.addSubview(stackview)
         stackview.anchor(top: logoImageView.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingLeft: 32, paddingRight: 32)
+        
         view.addSubview(dontHaveAccountButton)
-        dontHaveAccountButton.anchor(left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingLeft: 40, paddingRight: 40)
+        dontHaveAccountButton.anchor(left: view.leftAnchor,
+                                     bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                                     right: view.rightAnchor,
+                                     paddingLeft: 40,
+                                     paddingRight: 40)
     }
 }

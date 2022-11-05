@@ -4,15 +4,15 @@
 //
 //  Created by 강창혁 on 2022/10/04.
 //
-
-import Foundation
-
 import UIKit
 import FirebaseAuth
 import FirebaseDatabase
 
 class RegisterationController: UIViewController {
     // MARK: - Properties
+    
+    var viewModel = RegisterViewModel()
+    
     private let imagePicker = UIImagePickerController()
     private var profileImage: UIImage?
     private lazy var plusPhotoButton: UIButton = {
@@ -100,26 +100,35 @@ class RegisterationController: UIViewController {
         guard let password = passwordTextField.text else { return }
         guard let fullname = fullnameTextField.text else { return }
         guard let username = usernameTextField.text?.lowercased() else { return }
+        
         let credentials = AuthCredentials(email: email, password: password, fullname: fullname, username: username, profileImage: profileImage)
-        AuthService.shared.registerUser(credentials: credentials) { _, _ in
+        
+        viewModel.registerUser(credentials: credentials) { _, _ in
             guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+            
             guard let tab = window.rootViewController as? MainTabController else { return }
             tab.authenticateUserAndConfigureUI()
+            
             self.dismiss(animated: true)
         }
     }
     // MARK: - Helpers
     func configureUI() {
         view.backgroundColor = .twitterBlue
+        
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
+        
         navigationController?.navigationBar.isHidden = true
         navigationController?.navigationBar.barStyle = .black
+        
         view.addSubview(plusPhotoButton)
         plusPhotoButton.centerX(inView: view, topAnchor: view.safeAreaLayoutGuide.topAnchor)
         plusPhotoButton.setDimensions(width: 128, height: 128)
+        
         view.addSubview(stackview)
         stackview.anchor(top: plusPhotoButton.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 32, paddingLeft: 32, paddingRight: 32)
+        
         view.addSubview(alreadyHaveAccountButton)
         alreadyHaveAccountButton.anchor(left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingLeft: 40, paddingRight: 40)
     }
