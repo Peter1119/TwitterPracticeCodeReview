@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct NotificationViewModel {
+struct NotificationCellModel {
     
     private let notification: Notification
     private let type: NotificationType

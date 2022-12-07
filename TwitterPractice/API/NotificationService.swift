@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseAuth
+import RxSwift
 
 struct NotificationService {
     static let shared = NotificationService()
@@ -52,6 +53,16 @@ struct NotificationService {
             } else {
                 getNotifications(uid: uid, completion: completion)
             }
+        }
+    }
+    
+    func fetchNotificationRx() -> Observable<[Notification]> {
+        return Observable.create { observer in
+            fetchNotification { notificaions in
+                observer.onNext(notificaions)
+                observer.onCompleted()
+            }
+            return Disposables.create()
         }
     }
 }

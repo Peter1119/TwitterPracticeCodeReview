@@ -15,12 +15,17 @@
 		27F2E71F28EC28C700CFE9F2 /* MainTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F2E71E28EC28C700CFE9F2 /* MainTabController.swift */; };
 		27F2E72128EC2A4900CFE9F2 /* FeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F2E72028EC2A4900CFE9F2 /* FeedController.swift */; };
 		27F2E72328EC2A9800CFE9F2 /* ExploreController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F2E72228EC2A9800CFE9F2 /* ExploreController.swift */; };
-		27F2E72528EC2AD700CFE9F2 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F2E72428EC2AD700CFE9F2 /* NotificationController.swift */; };
+		27F2E72528EC2AD700CFE9F2 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F2E72428EC2AD700CFE9F2 /* NotificationViewController.swift */; };
 		27F2E72728EC2AED00CFE9F2 /* ConversationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F2E72628EC2AED00CFE9F2 /* ConversationsController.swift */; };
 		27F2E72928EC3BF000CFE9F2 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F2E72828EC3BF000CFE9F2 /* Extension.swift */; };
 		27F2E72C28EC456200CFE9F2 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F2E72B28EC456200CFE9F2 /* LoginController.swift */; };
 		27F2E72E28EC465700CFE9F2 /* RegisterationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F2E72D28EC465700CFE9F2 /* RegisterationController.swift */; };
 		27F2E73028EC65BC00CFE9F2 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F2E72F28EC65BC00CFE9F2 /* Utilities.swift */; };
+		35BF4E6A2940CFEE0011B648 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 35BF4E692940CFEE0011B648 /* RxCocoa */; };
+		35BF4E6C2940CFEE0011B648 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 35BF4E6B2940CFEE0011B648 /* RxRelay */; };
+		35BF4E6E2940CFEE0011B648 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 35BF4E6D2940CFEE0011B648 /* RxSwift */; };
+		35BF4E702940D02F0011B648 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BF4E6F2940D02F0011B648 /* Protocols.swift */; };
+		35BF4E722940D2140011B648 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BF4E712940D2140011B648 /* NotificationViewModel.swift */; };
 		63254B5529111A7E00C90DEC /* EditProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63254B5429111A7E00C90DEC /* EditProfileController.swift */; };
 		63254B5829111E9F00C90DEC /* EditProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63254B5729111E9F00C90DEC /* EditProfileHeader.swift */; };
 		63254B5A291147ED00C90DEC /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63254B59291147ED00C90DEC /* EditProfileViewModel.swift */; };
@@ -55,7 +60,7 @@
 		63D0BA78290685B6009F369A /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D0BA77290685B6009F369A /* Notification.swift */; };
 		63D0BA7A2906B002009F369A /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D0BA792906B002009F369A /* NotificationService.swift */; };
 		63D0BA7C2906C632009F369A /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D0BA7B2906C632009F369A /* NotificationCell.swift */; };
-		63D0BA7E29096372009F369A /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D0BA7D29096372009F369A /* NotificationViewModel.swift */; };
+		63D0BA7E29096372009F369A /* NotificationCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D0BA7D29096372009F369A /* NotificationCellModel.swift */; };
 		680FA38579CCBD581089FD96 /* Pods_TwitterPractice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0159610B50AE6148320A5C8 /* Pods_TwitterPractice.framework */; };
 /* End PBXBuildFile section */
 
@@ -71,12 +76,14 @@
 		27F2E71E28EC28C700CFE9F2 /* MainTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabController.swift; sourceTree = "<group>"; };
 		27F2E72028EC2A4900CFE9F2 /* FeedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedController.swift; sourceTree = "<group>"; };
 		27F2E72228EC2A9800CFE9F2 /* ExploreController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreController.swift; sourceTree = "<group>"; };
-		27F2E72428EC2AD700CFE9F2 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
+		27F2E72428EC2AD700CFE9F2 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		27F2E72628EC2AED00CFE9F2 /* ConversationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsController.swift; sourceTree = "<group>"; };
 		27F2E72828EC3BF000CFE9F2 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		27F2E72B28EC456200CFE9F2 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		27F2E72D28EC465700CFE9F2 /* RegisterationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterationController.swift; sourceTree = "<group>"; };
 		27F2E72F28EC65BC00CFE9F2 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		35BF4E6F2940D02F0011B648 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		35BF4E712940D2140011B648 /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		63254B5429111A7E00C90DEC /* EditProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileController.swift; sourceTree = "<group>"; };
 		63254B5729111E9F00C90DEC /* EditProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileHeader.swift; sourceTree = "<group>"; };
 		63254B59291147ED00C90DEC /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
@@ -111,7 +118,7 @@
 		63D0BA77290685B6009F369A /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		63D0BA792906B002009F369A /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		63D0BA7B2906C632009F369A /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
-		63D0BA7D29096372009F369A /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
+		63D0BA7D29096372009F369A /* NotificationCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCellModel.swift; sourceTree = "<group>"; };
 		C0159610B50AE6148320A5C8 /* Pods_TwitterPractice.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TwitterPractice.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D65F55A2752C446AF085974D /* Pods-TwitterPractice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwitterPractice.debug.xcconfig"; path = "Target Support Files/Pods-TwitterPractice/Pods-TwitterPractice.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -121,6 +128,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35BF4E6C2940CFEE0011B648 /* RxRelay in Frameworks */,
+				35BF4E6A2940CFEE0011B648 /* RxCocoa in Frameworks */,
+				35BF4E6E2940CFEE0011B648 /* RxSwift in Frameworks */,
 				680FA38579CCBD581089FD96 /* Pods_TwitterPractice.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -174,7 +184,7 @@
 				27F2E71E28EC28C700CFE9F2 /* MainTabController.swift */,
 				27F2E72028EC2A4900CFE9F2 /* FeedController.swift */,
 				27F2E72228EC2A9800CFE9F2 /* ExploreController.swift */,
-				27F2E72428EC2AD700CFE9F2 /* NotificationController.swift */,
+				35BF4E732940D21A0011B648 /* Notification */,
 				27F2E72628EC2AED00CFE9F2 /* ConversationsController.swift */,
 				639EA20528F310F800564ED9 /* UpLoadTweetController.swift */,
 				639EA21128F5720200564ED9 /* ProfileController.swift */,
@@ -191,6 +201,7 @@
 				27F2E72F28EC65BC00CFE9F2 /* Utilities.swift */,
 				639EA1FD28EFF85000564ED9 /* Constants.swift */,
 				63D0BA7129058B5D009F369A /* ActionSheetLauncher.swift */,
+				35BF4E6F2940D02F0011B648 /* Protocols.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -202,6 +213,15 @@
 				27F2E72D28EC465700CFE9F2 /* RegisterationController.swift */,
 			);
 			path = Authentication;
+			sourceTree = "<group>";
+		};
+		35BF4E732940D21A0011B648 /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				35BF4E712940D2140011B648 /* NotificationViewModel.swift */,
+				27F2E72428EC2AD700CFE9F2 /* NotificationViewController.swift */,
+			);
+			path = Notification;
 			sourceTree = "<group>";
 		};
 		63254B5629111E7600C90DEC /* Profile */ = {
@@ -239,7 +259,7 @@
 				639EA21928F65A6A00564ED9 /* ProfileHeaderViewModel.swift */,
 				63D0BA6F2903DE0B009F369A /* UploadTweetViewModel.swift */,
 				63D0BA75290598E2009F369A /* ActionSheetViewModel.swift */,
-				63D0BA7D29096372009F369A /* NotificationViewModel.swift */,
+				63D0BA7D29096372009F369A /* NotificationCellModel.swift */,
 				63254B59291147ED00C90DEC /* EditProfileViewModel.swift */,
 			);
 			path = ViewModel;
@@ -311,6 +331,11 @@
 			dependencies = (
 			);
 			name = TwitterPractice;
+			packageProductDependencies = (
+				35BF4E692940CFEE0011B648 /* RxCocoa */,
+				35BF4E6B2940CFEE0011B648 /* RxRelay */,
+				35BF4E6D2940CFEE0011B648 /* RxSwift */,
+			);
 			productName = TwitterPractice;
 			productReference = 27EF661F28EC269000C1E570 /* TwitterPractice.app */;
 			productType = "com.apple.product-type.application";
@@ -339,6 +364,9 @@
 				Base,
 			);
 			mainGroup = 27EF661628EC269000C1E570;
+			packageReferences = (
+				35BF4E682940CFED0011B648 /* XCRemoteSwiftPackageReference "RxSwift" */,
+			);
 			productRefGroup = 27EF662028EC269000C1E570 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -432,17 +460,18 @@
 				27F2E72C28EC456200CFE9F2 /* LoginController.swift in Sources */,
 				639EA20828F318FC00564ED9 /* InputTextView.swift in Sources */,
 				639EA21828F6513B00564ED9 /* ProfileFilterCell.swift in Sources */,
-				27F2E72528EC2AD700CFE9F2 /* NotificationController.swift in Sources */,
+				27F2E72528EC2AD700CFE9F2 /* NotificationViewController.swift in Sources */,
 				639EA21C28F6919900564ED9 /* UserCell.swift in Sources */,
 				27F2E73028EC65BC00CFE9F2 /* Utilities.swift in Sources */,
 				63254B5529111A7E00C90DEC /* EditProfileController.swift in Sources */,
 				63D0BA742905935E009F369A /* ActionSheetCell.swift in Sources */,
 				27F2E72728EC2AED00CFE9F2 /* ConversationsController.swift in Sources */,
-				63D0BA7E29096372009F369A /* NotificationViewModel.swift in Sources */,
+				63D0BA7E29096372009F369A /* NotificationCellModel.swift in Sources */,
 				27EF662328EC269000C1E570 /* AppDelegate.swift in Sources */,
 				63D0BA6C29003714009F369A /* TweetController.swift in Sources */,
 				639EA21228F5720200564ED9 /* ProfileController.swift in Sources */,
 				63D0BA702903DE0B009F369A /* UploadTweetViewModel.swift in Sources */,
+				35BF4E722940D2140011B648 /* NotificationViewModel.swift in Sources */,
 				63C5ADFB2916AC8C0061132B /* RegisterViewModel.swift in Sources */,
 				639EA21428F5A38400564ED9 /* ProfileHeader.swift in Sources */,
 				63254B5C2911487000C90DEC /* EditProfileCell.swift in Sources */,
@@ -458,6 +487,7 @@
 				63254B5829111E9F00C90DEC /* EditProfileHeader.swift in Sources */,
 				27F2E72328EC2A9800CFE9F2 /* ExploreController.swift in Sources */,
 				27EF662528EC269000C1E570 /* SceneDelegate.swift in Sources */,
+				35BF4E702940D02F0011B648 /* Protocols.swift in Sources */,
 				63D0BA7A2906B002009F369A /* NotificationService.swift in Sources */,
 				27F2E71F28EC28C700CFE9F2 /* MainTabController.swift in Sources */,
 				63D0BA6E29003A6D009F369A /* TweetHeader.swift in Sources */,
@@ -695,6 +725,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		35BF4E682940CFED0011B648 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		35BF4E692940CFEE0011B648 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 35BF4E682940CFED0011B648 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		35BF4E6B2940CFEE0011B648 /* RxRelay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 35BF4E682940CFED0011B648 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxRelay;
+		};
+		35BF4E6D2940CFEE0011B648 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 35BF4E682940CFED0011B648 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 27EF661728EC269000C1E570 /* Project object */;
 }

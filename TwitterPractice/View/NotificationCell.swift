@@ -15,7 +15,7 @@ protocol NotificationCellDelegate: AnyObject {
 class NotificationCell: UITableViewCell {
     // MARK: - Properties
     
-    var notification: Notification? {
+    private var viewModel: NotificationCellModel? {
         didSet { configure() }
     }
     
@@ -81,12 +81,15 @@ class NotificationCell: UITableViewCell {
     // MARK: - Helpers
     
     func configure() {
-        guard let notification = notification else { return }
-        let viewModel = NotificationViewModel(notification: notification)
+        guard let viewModel = viewModel else { return }
         profileImageView.sd_setImage(with: viewModel.profileImageUrl)
         notificationLabel.attributedText = viewModel.notificationText
         
         followButton.isHidden = viewModel.shouldHideFollowButton
         followButton.setTitle(viewModel.followButtonText, for: .normal)
+    }
+    
+    func bind(_ data: NotificationCellModel) {
+        self.viewModel = data
     }
 }
